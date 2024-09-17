@@ -1,11 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="Krystian Turek"/>
+    <link rel="stylesheet" href="./styles.css" type="text/css"/>
+    <title>Guitar tutorial</title>
 </head>
 <body>
-    <h1>Test</h1>
+    <header>
+        <h1>Guitar tutorial</h1>
+    </header>
+    <section>
+        <article>
+            <h2>Scale generator</h2>
+            <p>Select the root note and scale mode: </p>
+            <select id="scale-root-note">
+                <option value="C" selected>C</option>
+                <option value="C#">C&sharp;/D&flat;</option>
+                <option value="D">D</option>
+                <option value="D#">D&sharp;/E&flat;</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F&sharp;/G&flat;</option>
+                <option value="G">G</option>
+                <option value="G#">G&sharp;/A&flat;</option>
+                <option value="A">A</option>
+                <option value="A#">A&sharp;/B&flat;</option>
+                <option value="B">B</option>
+            </select>
+            <select id="scale-mode">
+                <option value="major" selected>Major</option>
+                <option value="natural-minor">Natural minor</option>
+                <option value="harmonic-minor">Harmonic minor</option>
+                <option value="melodic-minor">Melodic minor</option>
+            </select>
+            <button onclick="draw_generated_scale()">Generate!</button>
+            <ul class="note-chain" id="scale-view"></ul>
+            <div id="scale-generation-container">
+                <i>Select the root note and scale mode...</i>
+            </div>
+        </article>
+        <article>
+            <h2>How to build a major scale?</h2>
+            <p>To build a major scale you can use the formula providen below:</p>
+            <ul class="note-chain">
+                <li>R</li>
+                <li>W</li>
+                <li>W</li>
+                <li>H</li>
+                <li>W</li>
+                <li>W</li>
+                <li>W</li>
+                <li>H</li>
+            </ul>
+            <p>
+                Where <b>W</b> stands for <i>whole step</i>, <b>H</b> for <i>half step</i> and <b>R</b> for <i>root note</i>.<br>
+                You can also use two frets up as a whole step and one fret up as the half step.
+            </p>
+            <p>To present you this more clearly. Let's use the formula to build a <b>C major scale</b>:</p>
+            <ul class="note-chain">
+                <li>C<sub>(Root note)</sub></li>
+                <li>-</li>
+                <li>D<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>E<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>F<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>G<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>A<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>B<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>C<sub>(Half step)</sub></li>
+            </ul>
+            <p>Instructive representation</p>
+            <ul class="note-chain">
+                <li>Root note</li>
+                <li>-</li>
+                <li>Whole step</li>
+                <li>-</li>
+                <li>Whole step</li>
+                <li>-</li>
+                <li>Half step</li>
+                <li>-</li>
+                <li>Whole step</li>
+                <li>-</li>
+                <li>Whole step</li>
+                <li>-</li>
+                <li>Whole step</li>
+                <li>-</li>
+                <li>Half step</sub></li>
+            </ul>
+        </article>
+        <article>
+            <h2>How to build a minor scale?</h2>
+            <p>There are three types of minor scales. Natural minor, harmonic minor and melodic minor.</p>
+            <h3>Natural minor formula:</h3>
+            <ul class="note-chain">
+                <li>R</li>
+                <li>W</li>
+                <li>H</li>
+                <li>W</li>
+                <li>W</li>
+                <li>H</li>
+                <li>W</li>
+                <li>W</li>
+            </ul>
+            <h3>Harmonic minor formula:</h3>
+            <ul class="note-chain">
+                <li>R</li>
+                <li>W</li>
+                <li>H</li>
+                <li>W</li>
+                <li>W</li>
+                <li>H</li>
+                <li>3H</li>
+                <li>H</li>
+            </ul>
+            <h3>Melodic minor formula:</h3>
+            <ul class="note-chain">
+                <li>R</li>
+                <li>W</li>
+                <li>H</li>
+                <li>W</li>
+                <li>W</li>
+                <li>W</li>
+                <li>W</li>
+                <li>H</li>
+            </ul>
+            <p>
+                The <b>3H</b> means three half steps up.<br>
+                So, let's use C as a root note to build our Natural, Harmonic and Melodic minor scale.
+            </p>
+            <p><b>C Natural minor scale:</b></p>
+            <ul class="note-chain">
+                <li>C<sub>(Root note)</sub></li>
+                <li>-</li>
+                <li>D<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>D&sharp;<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>F<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>G<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>G&sharp;<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>A&sharp;<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>C<sub>(Whole step)</sub></li>
+            </ul>
+            <p><b>C Harmonic minor scale:</b></p>
+            <ul class="note-chain">
+                <li>C<sub>(Root note)</sub></li>
+                <li>-</li>
+                <li>D<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>D&sharp;<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>F<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>G<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>G&sharp;<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>B<sub>(Three half steps)</sub></li>
+                <li>-</li>
+                <li>C<sub>(Whole step)</sub></li>
+            </ul>
+            <p><b>C Melodic minor scale:</b></p>
+            <ul class="note-chain">
+                <li>C<sub>(Root note)</sub></li>
+                <li>-</li>
+                <li>D<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>D&sharp;<sub>(Half step)</sub></li>
+                <li>-</li>
+                <li>F<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>G<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>A<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>B<sub>(Whole step)</sub></li>
+                <li>-</li>
+                <li>C<sub>(Half step)</sub></li>
+            </ul>
+        </article>
+        <article>
+            <h2>How to build a guitar chord?</h2>
+            <p>
+                In order to build a chord you need to decide if it's the diminished, augmented, minor or major chord<br>
+                and choose in what key you are going to play. It's very important to know in what key you're playing<br>
+                as much as it hints you with the chords, etc. that are gonna sound not-wrong together!
+            </p>
+            <p>
+                Let's determine the key. We will use the C Major as the key.<br>
+                Now, we are going to see what notes will fit together in this key:
+            </p>
+            <ul class="note-chain">
+                <li>C</li>
+                <li>-</li>
+                <li>D</li>
+                <li>-</li>
+                <li>E</li>
+                <li>-</li>
+                <li>F</li>
+                <li>-</li>
+                <li>G</li>
+                <li>-</li>
+                <li>A</li>
+                <li>-</li>
+                <li>B</li>
+                <li>-</li>
+                <li>C</li>
+            </ul>
+            <p>But before we start. We need to learn some important basic chord formulas.</p>
+            <h3>Major chord formula:</h3>
+            <ul class="note-chain">
+                <li>1</li>
+                <li>-</li>
+                <li>3</li>
+                <li>-</li>
+                <li>5</li>
+            </ul>
+            <h3>Minor chord formula:</h3>
+            <ul class="note-chain">
+                <li>1</li>
+                <li>-</li>
+                <li>&flat;3</li>
+                <li>-</li>
+                <li>5</li>
+            </ul>
+            <h3>Diminished chord formula:</h3>
+            <ul class="note-chain">
+                <li>1</li>
+                <li>-</li>
+                <li>&flat;3</li>
+                <li>-</li>
+                <li>&flat;5</li>
+            </ul>
+            <h3>Augmented chord formula:</h3>
+            <ul class="note-chain">
+                <li>1</li>
+                <li>-</li>
+                <li>3</li>
+                <li>-</li>
+                <li>&sharp;5</li>
+            </ul>
+            <p>
+                What do these numbers even mean? You may ask. The numbers represent the scale degrees that are in key<br>
+                Reading the scale degrees is easy. You need only to treat the root note as the first scale degree.
+            </p>
+            <ul class="note-chain">
+                <li>C<sub>I degree</sub></li>
+                <li>-</li>
+                <li>D<sub>II degree</sub></li>
+                <li>-</li>
+                <li>E<sub>III degree</sub></li>
+                <li>-</li>
+                <li>F<sub>IV degree</sub></li>
+                <li>-</li>
+                <li>G<sub>V degree</sub></li>
+                <li>-</li>
+                <li>A<sub>VI degree</sub></li>
+                <li>-</li>
+                <li>B<sub>VII degree</sub></li>
+                <li>-</li>
+                <li>C<sub>VIII degree</sub></li>
+            </ul>
+            <p>
+                And using the method for reading the scale degrees. We can now start building chords!
+                Let's build C Major, minor, diminished and augmented chord!
+            </p>
+            <h3>C Major chord:</h3>
+            <ul class="note-chain">
+                <li>C<sub>I degree</sub></li>
+                <li>-</li>
+                <li>E<sub>III degree</sub></li>
+                <li>-</li>
+                <li>G<sub>V degree</sub></li>
+            </ul>
+            <h3>C Minor chord:</h3>
+            <ul class="note-chain">
+                <li>C<sub>I degree</sub></li>
+                <li>-</li>
+                <li>E&flat;<sub>III degree</sub></li>
+                <li>-</li>
+                <li>G<sub>V degree</sub></li>
+            </ul>
+            <h3>C Diminished chord:</h3>
+            <ul class="note-chain">
+                <li>C<sub>I degree</sub></li>
+                <li>-</li>
+                <li>E&flat;<sub>III degree</sub></li>
+                <li>-</li>
+                <li>G&flat;<sub>V degree</sub></li>
+            </ul>
+            <h3>C Augmented chord:</h3>
+            <ul class="note-chain">
+                <li>C<sub>I degree</sub></li>
+                <li>-</li>
+                <li>E<sub>III degree</sub></li>
+                <li>-</li>
+                <li>G&sharp;<sub>V degree</sub></li>
+            </ul>
+            <p>
+                It covers only major, minor, augmented and diminished chords building at this moment
+            </p>
+        </article>
+    </section>
+    <footer>
+        <p>The page has been fully created by Krystian Turek @virtual-float</p>
+    </footer>
+    <script type="text/javascript">
+
+        const notes = [
+            "C", "C&sharp;/D&flat;", "D", 
+            "D&sharp;/E&flat;", "E", "F", 
+            "F&sharp;/G&flat;", "G", "G&sharp;/A&flat;", 
+            "A", "A&sharp;/B&flat;", "B"
+        ];
+
+        const modes = {
+            "major":          [0, 2, 4, 5, 7, 9, 11, 0],
+            "natural-minor":  [0, 2, 3, 5, 7, 8, 10, 0],
+            "harmonic-minor": [0, 2, 3, 5, 7, 8, 11, 0],
+            "melodic-minor":  [0, 2, 3, 5, 7, 9, 11, 0]
+        };
+
+        function get_ranged_elements(array, start_index, end_index) {
+            let elements = [];
+
+            for (let i = start_index; i < end_index + start_index; i++) {
+                elements.push(array[i % array.length]);
+                console.log(elements[i]);
+            }
+
+            return elements;
+        }
+
+        function get_scale(root_note, scale_mode) {
+            let root_note_pos = notes.indexOf(root_note.charAt(0));
+
+            if (root_note.includes("&flat;")) {
+                root_note_pos -= 1;
+            } else if (root_note.includes("&sharp;")) {
+                root_note_pos += 1;
+            }
+
+            if (!modes[scale_mode]) {
+                console.log("Nieznany");
+                return [];
+            }
+
+            let scale = get_ranged_elements(notes, root_note_pos, notes.length);
+            let generated_scale = [];
+
+            const formula = modes[scale_mode];
+
+            for (let i = 0; i < formula.length; i++) {
+                generated_scale.push(scale[formula[i]]);
+            }
+
+
+            return generated_scale;
+        }
+
+        function draw_generated_scale() {
+            const generator_container = document.querySelector("#scale-generation-container");
+            const root_note = document.querySelector("#scale-root-note").value;
+            const scale_mode = document.querySelector("#scale-mode").value;
+
+            const note_list = document.createElement("ul");
+            note_list.classList.add("note-chain");
+
+            const scale = get_scale(root_note, scale_mode);
+
+            if (scale == []) {
+                generator_container.innerHTML = "<b>Error.</b>";
+                return;
+            }
+
+            for (let i = 0; i < scale.length; i++) {
+                const note = document.createElement("li");
+                note.innerHTML = scale[i];
+
+                note_list.appendChild(note);
+            }
+
+            generator_container.innerHTML = "";
+
+            generator_container.appendChild(note_list);
+        }
+
+    </script>
 </body>
 </html>
