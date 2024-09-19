@@ -332,12 +332,15 @@
             "melodic-minor":  [0, 2, 3, 5, 7, 9, 11, 0]
         };
 
+
         function get_ranged_elements(array, start_index, end_index) {
             let elements = [];
 
+            // console.log(start_index, end_index);
+
             for (let i = start_index; i < end_index + start_index; i++) {
                 elements.push(array[i % array.length]);
-                console.log(elements[i]);
+                // console.log(elements);
             }
 
             return elements;
@@ -346,14 +349,15 @@
         function get_scale(root_note, scale_mode) {
             let root_note_pos = notes.indexOf(root_note.charAt(0));
 
-            if (root_note.includes("&flat;")) {
-                root_note_pos -= 1;
-            } else if (root_note.includes("&sharp;")) {
+            if (root_note.includes("#")) {
                 root_note_pos += 1;
             }
 
+            // console.log(root_note_pos, root_note)
+
             if (!modes[scale_mode]) {
-                console.log("Nieznany");
+                // console.log("Error");
+                
                 return [];
             }
 
@@ -380,17 +384,17 @@
 
             const scale = get_scale(root_note, scale_mode);
 
-            if (scale == []) {
+            if (scale == [] || !scale.indexOf(undefined)) {
                 generator_container.innerHTML = "<b>Error.</b>";
                 return;
             }
 
-            for (let i = 0; i < scale.length; i++) {
+            scale.forEach(function(e, i, self) {
                 const note = document.createElement("li");
-                note.innerHTML = scale[i];
+                note.innerHTML = e;
 
                 note_list.appendChild(note);
-            }
+            })
 
             generator_container.innerHTML = "";
 
